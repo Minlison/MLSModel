@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>NSObject(MLSYYModel) Category Reference</title>
+
+	<link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1334)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="../index.html">MLSModel </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="../index.html">MinLison</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
+
+					<li id="on-this-page" role="navigation">
+						<label>
+							On This Page
+
+							<div class="chevron">
+								<div class="chevy chevron-left"></div>
+								<div class="chevy chevron-right"></div>
+							</div>
+
+							<select id="jump-to">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+
+	
+	
+
+	
+	<optgroup label="Class Methods">
+		
+		<option value="//api/name/mls_modelWithDictionary:">+ mls_modelWithDictionary:</option>
+		
+		<option value="//api/name/mls_modelWithJSON:">+ mls_modelWithJSON:</option>
+		
+	</optgroup>
+	
+
+	
+	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/mls_modelCopy">- mls_modelCopy</option>
+		
+		<option value="//api/name/mls_modelDescription">- mls_modelDescription</option>
+		
+		<option value="//api/name/mls_modelEncodeWithCoder:">- mls_modelEncodeWithCoder:</option>
+		
+		<option value="//api/name/mls_modelHash">- mls_modelHash</option>
+		
+		<option value="//api/name/mls_modelInitWithCoder:">- mls_modelInitWithCoder:</option>
+		
+		<option value="//api/name/mls_modelIsEqual:">- mls_modelIsEqual:</option>
+		
+		<option value="//api/name/mls_modelSetWithDictionary:">- mls_modelSetWithDictionary:</option>
+		
+		<option value="//api/name/mls_modelSetWithJSON:">- mls_modelSetWithJSON:</option>
+		
+		<option value="//api/name/mls_modelToJSONData">- mls_modelToJSONData</option>
+		
+		<option value="//api/name/mls_modelToJSONObject">- mls_modelToJSONObject</option>
+		
+		<option value="//api/name/mls_modelToJSONString">- mls_modelToJSONString</option>
+		
+	</optgroup>
+	
+	
+</select>
+						</label>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview_contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">NSObject(MLSYYModel) Category Reference</h1>
+
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<th>Declared in</th>
+	<td>NSObject+MLSYYModel.h</td>
+</tr>
+						</tbody></table></div>
+					
+
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>Provide some data-model method:</p>
+
+<ul>
+<li>Convert json to any object, or convert any object to json.</li>
+<li>Set object properties with a key-value dictionary (like KVC).</li>
+<li>Implementations of <code>NSCoding</code>, <code>NSCopying</code>, <code>-hash</code> and <code>-isEqual:</code>.</li>
+</ul>
+
+
+<p>See <code>MLSYYModel</code> protocol for custom methods.</p>
+
+<p>Sample Code:</p>
+
+<pre><code> ********************** json convertor *********************
+</code></pre>
+
+<p>```
+     @interface MLSYYAuthor : NSObject
+     @property (nonatomic, strong) NSString <em>name;
+     @property (nonatomic, assign) NSDate </em>birthday;
+     @end
+     @implementation MLSYYAuthor
+     @end</p>
+
+<pre><code> @interface MLSYYBook : NSObject
+ @property (nonatomic, copy) NSString *name;
+ @property (nonatomic, assign) NSUInteger pages;
+ @property (nonatomic, strong) MLSYYAuthor *author;
+ @end
+ @implementation MLSYYBook
+ @end
+
+ int main() {
+     // create model from json
+     MLSYYBook *book = [MLSYYBook mls_modelWithJSON:@"{\"name\": \"Harry Potter\", \"pages\": 256, \"author\": {\"name\": \"J.K.Rowling\", \"birthday\": \"1965-07-31\" }}"];
+
+     // convert model to json
+     NSString *json = [book mls_modelToJSONString];
+     // {"author":{"name":"J.K.Rowling","birthday":"1965-07-31T00:00:00+0000"},"name":"Harry Potter","pages":256}
+ }
+</code></pre>
+
+<p>```</p>
+
+<pre><code> ********************** Coding/Copying/hash/equal *********************
+</code></pre>
+
+<p>@code
+     @interface MLSYYShadow :NSObject &lt;NSCoding, NSCopying>
+     @property (nonatomic, copy) NSString *name;
+     @property (nonatomic, assign) CGSize size;
+     @end</p>
+
+<pre><code> @implementation MLSYYShadow
+ - (void)encodeWithCoder:(NSCoder *)aCoder { [self mls_modelEncodeWithCoder:aCoder]; }
+ - (id)initWithCoder:(NSCoder *)aDecoder { self = [super init]; return [self mls_modelInitWithCoder:aDecoder]; }
+ - (id)copyWithZone:(NSZone *)zone { return [self mls_modelCopy]; }
+ - (NSUInteger)hash { return [self mls_modelHash]; }
+ - (BOOL)isEqual:(id)object { return [self mls_modelIsEqual:object]; }
+ @end
+</code></pre>
+
+<p>@endcode</p>
+					</div>
+					
+					
+
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/mls_modelWithJSON:" title="mls_modelWithJSON:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mls_modelWithJSON:">+&nbsp;mls_modelWithJSON:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Creates and returns a new instance of the receiver from a json.
+This method is thread-safe.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (nullable instancetype)mls_modelWithJSON:(id)<em>json</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>json</code></th>
+						<td><p>A json object in <code>NSDictionary</code>, <code>NSString</code> or <code>NSData</code>.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>A new instance created from the json, or nil if an error occurs.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mls_modelWithDictionary:" title="mls_modelWithDictionary:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mls_modelWithDictionary:">+&nbsp;mls_modelWithDictionary:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Creates and returns a new instance of the receiver from a key-value dictionary.
+This method is thread-safe.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (nullable instancetype)mls_modelWithDictionary:(NSDictionary *)<em>dictionary</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>dictionary</code></th>
+						<td><p>A key-value dictionary mapped to the instance&rsquo;s properties.
+Any invalid key-value pair in dictionary will be ignored.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>A new instance created from the dictionary, or nil if an error occurs.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>The key in <code>dictionary</code> will mapped to the reciever&rsquo;s property name,
+and the value will set to the property. If the value&rsquo;s type does not match the
+property, this method will try to convert the value based on these rules:</p>
+
+<pre><code> `NSString` or `NSNumber` -&gt; c number, such as BOOL, int, long, float, NSUInteger...
+ `NSString` -&gt; NSDate, parsed with format "yyyy-MM-dd'T'HH:mm:ssZ", "yyyy-MM-dd HH:mm:ss" or "yyyy-MM-dd".
+ `NSString` -&gt; NSURL.
+ `NSValue` -&gt; struct or union, such as CGRect, CGSize, ...
+ `NSString` -&gt; SEL, Class.
+</code></pre>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mls_modelSetWithJSON:" title="mls_modelSetWithJSON:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mls_modelSetWithJSON:">&ndash;&nbsp;mls_modelSetWithJSON:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Set the receiver&rsquo;s properties with a json object.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)mls_modelSetWithJSON:(id)<em>json</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>json</code></th>
+						<td><p>A json object of <code>NSDictionary</code>, <code>NSString</code> or <code>NSData</code>, mapped to the
+receiver&rsquo;s properties.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>Whether succeed.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Any invalid data in json will be ignored.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mls_modelSetWithDictionary:" title="mls_modelSetWithDictionary:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mls_modelSetWithDictionary:">&ndash;&nbsp;mls_modelSetWithDictionary:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Set the receiver&rsquo;s properties with a key-value dictionary.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)mls_modelSetWithDictionary:(NSDictionary *)<em>dic</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>dic</code></th>
+						<td><p>A key-value dictionary mapped to the receiver&rsquo;s properties.
+Any invalid key-value pair in dictionary will be ignored.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>Whether succeed.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>The key in <code>dictionary</code> will mapped to the reciever&rsquo;s property name,
+and the value will set to the property. If the value&rsquo;s type doesn&rsquo;t match the
+property, this method will try to convert the value based on these rules:</p>
+
+<pre><code> `NSString`, `NSNumber` -&gt; c number, such as BOOL, int, long, float, NSUInteger...
+ `NSString` -&gt; NSDate, parsed with format "yyyy-MM-dd'T'HH:mm:ssZ", "yyyy-MM-dd HH:mm:ss" or "yyyy-MM-dd".
+ `NSString` -&gt; NSURL.
+ `NSValue` -&gt; struct or union, such as CGRect, CGSize, ...
+ `NSString` -&gt; SEL, Class.
+</code></pre>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mls_modelToJSONObject" title="mls_modelToJSONObject"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mls_modelToJSONObject">&ndash;&nbsp;mls_modelToJSONObject</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Generate a json object from the receiver&rsquo;s properties.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (nullable id)mls_modelToJSONObject</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>A json object in <code>NSDictionary</code> or <code>NSArray</code>, or nil if an error occurs.
+See [NSJSONSerialization isValidJSONObject] for more information.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Any of the invalid property is ignored.
+If the reciver is <code>NSArray</code>, <code>NSDictionary</code> or <code>NSSet</code>, it just convert
+the inner object to json object.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mls_modelToJSONData" title="mls_modelToJSONData"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mls_modelToJSONData">&ndash;&nbsp;mls_modelToJSONData</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Generate a json string&rsquo;s data from the receiver&rsquo;s properties.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (nullable NSData *)mls_modelToJSONData</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>A json string&rsquo;s data, or nil if an error occurs.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Any of the invalid property is ignored.
+If the reciver is <code>NSArray</code>, <code>NSDictionary</code> or <code>NSSet</code>, it will also convert the
+inner object to json string.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mls_modelToJSONString" title="mls_modelToJSONString"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mls_modelToJSONString">&ndash;&nbsp;mls_modelToJSONString</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Generate a json string from the receiver&rsquo;s properties.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (nullable NSString *)mls_modelToJSONString</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>A json string, or nil if an error occurs.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Any of the invalid property is ignored.
+If the reciver is <code>NSArray</code>, <code>NSDictionary</code> or <code>NSSet</code>, it will also convert the
+inner object to json string.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mls_modelCopy" title="mls_modelCopy"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mls_modelCopy">&ndash;&nbsp;mls_modelCopy</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Copy a instance with the receiver&rsquo;s properties.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (nullable id)mls_modelCopy</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>A copied instance, or nil if an error occurs.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mls_modelEncodeWithCoder:" title="mls_modelEncodeWithCoder:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mls_modelEncodeWithCoder:">&ndash;&nbsp;mls_modelEncodeWithCoder:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Encode the receiver&rsquo;s properties to a coder.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)mls_modelEncodeWithCoder:(NSCoder *)<em>aCoder</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>aCoder</code></th>
+						<td><p>An archiver object.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mls_modelInitWithCoder:" title="mls_modelInitWithCoder:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mls_modelInitWithCoder:">&ndash;&nbsp;mls_modelInitWithCoder:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Decode the receiver&rsquo;s properties from a decoder.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (id)mls_modelInitWithCoder:(NSCoder *)<em>aDecoder</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>aDecoder</code></th>
+						<td><p>An archiver object.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>self</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mls_modelHash" title="mls_modelHash"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mls_modelHash">&ndash;&nbsp;mls_modelHash</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Get a hash code with the receiver&rsquo;s properties.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSUInteger)mls_modelHash</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>Hash code.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mls_modelIsEqual:" title="mls_modelIsEqual:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mls_modelIsEqual:">&ndash;&nbsp;mls_modelIsEqual:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Compares the receiver with another object for equality, based on properties.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)mls_modelIsEqual:(id)<em>model</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>model</code></th>
+						<td><p>Another object.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p><code>YES</code> if the reciever is equal to the object, otherwise <code>NO</code>.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mls_modelDescription" title="mls_modelDescription"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mls_modelDescription">&ndash;&nbsp;mls_modelDescription</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Description method for debugging purposes based on properties.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSString *)mls_modelDescription</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>A string that describes the contents of the receiver.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
+					
+
+                    
+				</main>
+
+				<footer>
+					<div class="footer-copyright">
+						
+						<p class="copyright">Copyright &copy; 2019 MinLison. All rights reserved. Updated: 2019-08-21</p>
+						
+						
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
+						
+					</div>
+				</footer>
+			</div>
+		</div>
+	</article>
+
+	<script src="../js/script.js"></script>
+</body>
+</html>

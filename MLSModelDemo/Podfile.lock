@@ -1,0 +1,20 @@
+PODS:
+  - MLSModel (1.0.0):
+    - MLSModel/Core (= 1.0.0)
+  - MLSModel/Core (1.0.0):
+    - MLSModel/MLSYYModelModify
+  - MLSModel/MLSYYModelModify (1.0.0)
+
+DEPENDENCIES:
+  - MLSModel (from `../`)
+
+EXTERNAL SOURCES:
+  MLSModel:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  MLSModel: 8256e7121e2eb9c189a50a4f74b720912cb9f10c
+
+PODFILE CHECKSUM: 9b2b55fa5473f7e8ed7601bf60a2760f8217df0e
+
+COCOAPODS: 1.7.3

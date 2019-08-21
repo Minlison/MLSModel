@@ -1,0 +1,28 @@
+BUILD_CONFIGURATIONS:
+  Debug: :debug
+  Release: :release
+CACHE_KEYS:
+  MLSModel:
+    BUILD_SETTINGS_CHECKSUM:
+      MLSModel: 276bfcf40969778561cd9b10ba5851c2
+    CHECKSUM: 8256e7121e2eb9c189a50a4f74b720912cb9f10c
+    FILES:
+      - "/Users/yuanhang/Documents/Github/MLSModel/Classes/Core/MLSBaseModel.h"
+      - "/Users/yuanhang/Documents/Github/MLSModel/Classes/Core/MLSBaseModel.m"
+      - "/Users/yuanhang/Documents/Github/MLSModel/Classes/Core/MLSModel.h"
+      - "/Users/yuanhang/Documents/Github/MLSModel/Classes/YYModelModify/MLSYYClassInfo.h"
+      - "/Users/yuanhang/Documents/Github/MLSModel/Classes/YYModelModify/MLSYYClassInfo.m"
+      - "/Users/yuanhang/Documents/Github/MLSModel/Classes/YYModelModify/MLSYYModelModifyPrivate.h"
+      - "/Users/yuanhang/Documents/Github/MLSModel/Classes/YYModelModify/NSObject+MLSYYModel.h"
+      - "/Users/yuanhang/Documents/Github/MLSModel/Classes/YYModelModify/NSObject+MLSYYModel.m"
+      - "/Users/yuanhang/Documents/Github/MLSModel/LICENSE"
+      - "/Users/yuanhang/Documents/Github/MLSModel/README.md"
+    SPECS:
+      - MLSModel (1.0.0)
+      - MLSModel/Core (1.0.0)
+      - MLSModel/MLSYYModelModify (1.0.0)
+  Pods-MLSModelDemo:
+    BUILD_SETTINGS_CHECKSUM:
+      Debug: 2bbf14bd4ded5370e2dc45fa1e5a3c2c
+      Release: 2bbf14bd4ded5370e2dc45fa1e5a3c2c
+OBJECT_VERSION: 50

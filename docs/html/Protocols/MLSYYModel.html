@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>MLSYYModel Protocol Reference</title>
+
+	<link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1334)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="../index.html">MLSModel </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="../index.html">MinLison</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
+
+					<li id="on-this-page" role="navigation">
+						<label>
+							On This Page
+
+							<div class="chevron">
+								<div class="chevy chevron-left"></div>
+								<div class="chevy chevron-right"></div>
+							</div>
+
+							<select id="jump-to">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+
+	
+	
+
+	
+	<optgroup label="Class Methods">
+		
+		<option value="//api/name/modelContainerPropertyGenericClass">+ modelContainerPropertyGenericClass</option>
+		
+		<option value="//api/name/modelCustomClassForDictionary:">+ modelCustomClassForDictionary:</option>
+		
+		<option value="//api/name/modelCustomPropertyMapper">+ modelCustomPropertyMapper</option>
+		
+		<option value="//api/name/modelPropertyBlacklist">+ modelPropertyBlacklist</option>
+		
+		<option value="//api/name/modelPropertyWhitelist">+ modelPropertyWhitelist</option>
+		
+	</optgroup>
+	
+
+	
+	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/modelCustomTransformFromDictionary:">- modelCustomTransformFromDictionary:</option>
+		
+		<option value="//api/name/modelCustomTransformToDictionary:">- modelCustomTransformToDictionary:</option>
+		
+		<option value="//api/name/modelCustomWillTransformFromDictionary:">- modelCustomWillTransformFromDictionary:</option>
+		
+	</optgroup>
+	
+	
+</select>
+						</label>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview_contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">MLSYYModel Protocol Reference</h1>
+
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<th>Conforms to</th>
+	<td>NSObject</td>
+</tr><tr>
+	<th>Declared in</th>
+	<td>NSObject+MLSYYModel.h</td>
+</tr>
+						</tbody></table></div>
+					
+
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>If the default model transform does not fit to your model class, implement one or
+more method in this protocol to change the default key-value transform process.
+There&rsquo;s no need to add &lsquo;<MLSYYModel>&rsquo; to your class header.</p>
+					</div>
+					
+					
+
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/modelCustomPropertyMapper" title="modelCustomPropertyMapper"></a>
+	<h3 class="method-title"><code><a href="#//api/name/modelCustomPropertyMapper">+&nbsp;modelCustomPropertyMapper</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Custom property mapper.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (nullable NSDictionary&lt;NSString*,id&gt; *)modelCustomPropertyMapper</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>A custom mapper for properties.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>If the key in JSON/Dictionary does not match to the model&rsquo;s property name,
+implements this method and returns the additional mapper.</p>
+
+<p>Example:</p>
+
+<pre><code>json: 
+    {
+        "n":"Harry Pottery",
+        "p": 256,
+        "ext" : {
+            "desc" : "A book written by J.K.Rowling."
+        },
+        "ID" : 100010
+    }
+
+model:
+@code
+    @interface MLSYYBook : NSObject
+    @property NSString *name;
+    @property NSInteger page;
+    @property NSString *desc;
+    @property NSString *bookID;
+    @end
+
+    @implementation MLSYYBook
+    + (NSDictionary *)modelCustomPropertyMapper {
+        return @{@"name"  : @"n",
+                 @"page"  : @"p",
+                 @"desc"  : @"ext.desc",
+                 @"bookID": @[@"id", @"ID", @"book_id"]};
+    }
+    @end
+ @endcode
+</code></pre>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/modelContainerPropertyGenericClass" title="modelContainerPropertyGenericClass"></a>
+	<h3 class="method-title"><code><a href="#//api/name/modelContainerPropertyGenericClass">+&nbsp;modelContainerPropertyGenericClass</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The generic class mapper for container properties.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (nullable NSDictionary&lt;NSString*,id&gt; *)modelContainerPropertyGenericClass</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>A class mapper.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>If the property is a container object, such as NSArray/NSSet/NSDictionary,
+implements this method and returns a property->class mapper, tells which kind of
+object will be add to the array/set/dictionary.</p>
+
+<p>  Example:
+  @code
+        @class MLSYYShadow, MLSYYBorder, MLSYYAttachment;</p>
+
+<pre><code>    @interface MLSYYAttributes
+    @property NSString *name;
+    @property NSArray *shadows;
+    @property NSSet *borders;
+    @property NSDictionary *attachments;
+    @end
+
+    @implementation MLSYYAttributes
+    + (NSDictionary *)modelContainerPropertyGenericClass {
+        return @{@"shadows" : [MLSYYShadow class],
+                 @"borders" : MLSYYBorder.class,
+                 @"attachments" : @"MLSYYAttachment" };
+    }
+    @end
+</code></pre>
+
+<p>  @endcode</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/modelCustomClassForDictionary:" title="modelCustomClassForDictionary:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/modelCustomClassForDictionary:">+&nbsp;modelCustomClassForDictionary:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>If you need to create instances of different classes during json->object transform,
+use the method to choose custom class based on dictionary data.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (nullable Class)modelCustomClassForDictionary:(NSDictionary *)<em>dictionary</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>dictionary</code></th>
+						<td><p>The json/kv dictionary.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>Class to create from this dictionary, <code>nil</code> to use current class.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>If the model implements this method, it will be called to determine resulting class
+during <code>+modelWithJSON:</code>, <code>+modelWithDictionary:</code>, conveting object of properties of parent objects
+(both singular and containers via <a href="#//api/name/modelContainerPropertyGenericClass"><code>modelContainerPropertyGenericClass</code></a>).</p>
+
+<p>Example:
+@code
+        @class MLSYYCircle, MLSYYRectangle, MLSYYLine;</p>
+
+<pre><code>    @implementation MLSYYShape
+
+    + (Class)modelCustomClassForDictionary:(NSDictionary*)dictionary {
+        if (dictionary[@"radius"] != nil) {
+            return [MLSYYCircle class];
+        } else if (dictionary[@"width"] != nil) {
+            return [MLSYYRectangle class];
+        } else if (dictionary[@"y2"] != nil) {
+            return [MLSYYLine class];
+        } else {
+            return [self class];
+        }
+    }
+
+    @end
+</code></pre>
+
+<p>@endcode</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/modelPropertyBlacklist" title="modelPropertyBlacklist"></a>
+	<h3 class="method-title"><code><a href="#//api/name/modelPropertyBlacklist">+&nbsp;modelPropertyBlacklist</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>All the properties in blacklist will be ignored in model transform process.
+Returns nil to ignore this feature.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (nullable NSArray&lt;NSString*&gt; *)modelPropertyBlacklist</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>An array of property&rsquo;s name.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/modelPropertyWhitelist" title="modelPropertyWhitelist"></a>
+	<h3 class="method-title"><code><a href="#//api/name/modelPropertyWhitelist">+&nbsp;modelPropertyWhitelist</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>If a property is not in the whitelist, it will be ignored in model transform process.
+Returns nil to ignore this feature.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (nullable NSArray&lt;NSString*&gt; *)modelPropertyWhitelist</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>An array of property&rsquo;s name.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/modelCustomWillTransformFromDictionary:" title="modelCustomWillTransformFromDictionary:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/modelCustomWillTransformFromDictionary:">&ndash;&nbsp;modelCustomWillTransformFromDictionary:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>This method&rsquo;s behavior is similar to <code>- (BOOL)</code>modelCustomTransformFromDictionary:<code>(NSDictionary *)dic;</code>,
+but be called before the model transform.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSDictionary *)modelCustomWillTransformFromDictionary:(NSDictionary *)<em>dic</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>dic</code></th>
+						<td><p>The json/kv dictionary.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>Returns the modified dictionary, or nil to ignore this model.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>If the model implements this method, it will be called before
+<code>+modelWithJSON:</code>, <code>+modelWithDictionary:</code>, <code>-modelSetWithJSON:</code> and <code>-modelSetWithDictionary:</code>.
+If this method returns nil, the transform process will ignore this model.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/modelCustomTransformFromDictionary:" title="modelCustomTransformFromDictionary:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/modelCustomTransformFromDictionary:">&ndash;&nbsp;modelCustomTransformFromDictionary:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>If the default json-to-model transform does not fit to your model object, implement
+this method to do additional process. You can also use this method to validate the
+model&rsquo;s properties.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)<em>dic</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>dic</code></th>
+						<td><p>The json/kv dictionary.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>Returns YES if the model is valid, or NO to ignore this model.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>If the model implements this method, it will be called at the end of
+<code>+modelWithJSON:</code>, <code>+modelWithDictionary:</code>, <code>-modelSetWithJSON:</code> and <code>-modelSetWithDictionary:</code>.
+If this method returns NO, the transform process will ignore this model.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/modelCustomTransformToDictionary:" title="modelCustomTransformToDictionary:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/modelCustomTransformToDictionary:">&ndash;&nbsp;modelCustomTransformToDictionary:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>If the default model-to-json transform does not fit to your model class, implement
+this method to do additional process. You can also use this method to validate the
+json dictionary.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)modelCustomTransformToDictionary:(NSMutableDictionary *)<em>dic</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>dic</code></th>
+						<td><p>The json dictionary.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>Returns YES if the model is valid, or NO to ignore this model.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>If the model implements this method, it will be called at the end of
+<code>-modelToJSONObject</code> and <code>-modelToJSONString</code>.
+If this method returns NO, the transform process will ignore this json dictionary.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">NSObject+MLSYYModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
+					
+
+                    
+				</main>
+
+				<footer>
+					<div class="footer-copyright">
+						
+						<p class="copyright">Copyright &copy; 2019 MinLison. All rights reserved. Updated: 2019-08-21</p>
+						
+						
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
+						
+					</div>
+				</footer>
+			</div>
+		</div>
+	</article>
+
+	<script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+MLSModel:
+  LABEL: MLSModel
+  PROJECT_PATH: "/Users/yuanhang/Documents/Github/MLSModel/MLSModelDemo/Pods/MLSModel.xcodeproj"
+  UUID: D30A9A9F74156B8507F6191110393560
+Pods-MLSModelDemo:
+  LABEL: Pods-MLSModelDemo
+  PROJECT_PATH: "/Users/yuanhang/Documents/Github/MLSModel/MLSModelDemo/Pods/Pods.xcodeproj"
+  UUID: 1D83E3694BB8F1991EDD932EBF815FCD
+YYModel:
+  LABEL: YYModel
+  PROJECT_PATH: "/Users/yuanhang/Documents/Github/MLSModel/MLSModelDemo/Pods/YYModel.xcodeproj"
+  UUID: B24F71FDC23D2B2E241DE51DECC7ED5F

@@ -1,0 +1,16 @@
+source 'https://cdn.cocoapods.org/'
+
+platform :ios, '9.0'
+install! 'cocoapods',
+deterministic_uuids: false,
+disable_input_output_paths: true,
+generate_multiple_pod_projects: true,
+incremental_installation: true
+
+target 'MLSModelDemo' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  pod 'MLSModel', :path => '../'
+#  pod 'YYModel'
+end

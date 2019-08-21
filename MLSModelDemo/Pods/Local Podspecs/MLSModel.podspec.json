@@ -1,0 +1,39 @@
+{
+  "name": "MLSModel",
+  "version": "1.0.0",
+  "summary": "统一模型管理",
+  "description": "统一管理模型，提供便捷方法",
+  "homepage": "http://www.minlison.cn",
+  "license": "MIT",
+  "authors": {
+    "Minlison": "yuanhang.1991@163.com"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source": {
+    "git": "https://github.com/Minlison/MLSModel.git",
+    "tag": "v1.0.0"
+  },
+  "documentation_url": "https://minlison.cn/article/mlsmodel",
+  "requires_arc": true,
+  "static_framework": true,
+  "default_subspecs": "Core",
+  "subspecs": [
+    {
+      "name": "Core",
+      "source_files": "Classes/Core/**/*.{h,m}",
+      "public_header_files": "Classes/Core/**/*.h",
+      "dependencies": {
+        "MLSModel/MLSYYModelModify": [
+
+        ]
+      }
+    },
+    {
+      "name": "MLSYYModelModify",
+      "source_files": "Classes/YYModelModify/**/*.{h,m}",
+      "public_header_files": "Classes/YYModelModify/**/NSObject+MLSYYModel.h"
+    }
+  ]
+}
